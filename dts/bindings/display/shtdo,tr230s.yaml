@@ -3,35 +3,27 @@
 compatible: "shtdo,tr230s"
 
 description: |
-  Shanghai Top Display Optoelectronics TR230S SPI-to-RGB display bridge.
+  Shanghai Top Display Optoelectronics TR230S display bridge/controller.
 
-  This binding describes the four-wire SPI host interface. The host uses a
-  data/command GPIO to distinguish commands from payload bytes. The WAIT
-  signal is active when the controller can accept a new transaction.
+  The supported host interface is MIPI DBI Type C using four-wire SPI. The
+  WAIT input is the controller-ready flow-control signal and is sampled before
+  each TR230S controller transaction.
 
-include:
-  - name: spi-device.yaml
-  - name: display-controller.yaml
+include: [mipi-dbi-spi-device.yaml, display-controller.yaml]
 
 properties:
-  dc-gpios:
-    type: phandle-array
+  mipi-max-frequency:
     required: true
-    description: |
-      Data/command selection GPIO. The inactive logical state selects command
-      bytes and the active logical state selects parameters or pixel data.
 
-  reset-gpios:
-    type: phandle-array
+  mipi-mode:
     required: true
-    description: Hardware reset GPIO. The active logical state resets TR230S.
 
   wait-gpios:
     type: phandle-array
     required: true
     description: |
-      Controller-ready input. The active logical state means that a new
-      transaction may be transmitted.
+      Controller-ready input. The active logical state means that the TR230S
+      can accept a new controller transaction.
 
   ready-timeout-ms:
     type: int
@@ -43,17 +35,17 @@ properties:
   reset-pre-delay-ms:
     type: int
     default: 0
-    description: Delay before asserting hardware reset.
+    description: Delay before asserting hardware reset, in milliseconds.
 
   reset-pulse-ms:
     type: int
     default: 10
-    description: Duration of the active hardware-reset pulse.
+    description: Duration of the active hardware-reset pulse, in milliseconds.
 
   post-reset-delay-ms:
     type: int
     default: 0
-    description: Delay after releasing hardware reset.
+    description: Delay after releasing hardware reset, in milliseconds.
 
   default-brightness:
     type: int
