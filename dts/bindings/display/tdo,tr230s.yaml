@@ -7,10 +7,10 @@ description: |
   that accepts RGB565 pixel data from a host and drives an attached RGB display
   panel.
 
-  This binding and driver support the MIPI DBI Type C four-wire SPI host
-  interface. The TR230S also supports other host interfaces outside the scope
-  of this binding. WAIT is controller-ready flow control and is checked before
-  each controller transaction.
+  This binding supports the MIPI DBI Type C four-wire SPI host interface.
+  The TR230S also supports other host interfaces outside the scope of this
+  binding. WAIT is controller-ready flow control and is checked before each
+  controller transaction.
 
 compatible: "tdo,tr230s"
 
@@ -39,8 +39,7 @@ properties:
     enum:
       - "MIPI_DBI_MODE_SPI_4WIRE"
     description: |
-      MIPI DBI Type C mode used by this binding and driver. Four-wire SPI is
-      the supported and validated mode for this Zephyr integration.
+      MIPI DBI Type C mode used by this binding.
 
   wait-gpios:
     type: phandle-array
